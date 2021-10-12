@@ -25,10 +25,20 @@ export default new Vuex.Store({
         password: null,
         drawer: false,
         url: "http://soulslikecoop.com:8081/api/v1",
-        games:{},
-        platforms:{},
-        locationTypes:{},
-        locations:{}
+        games: {},
+        platforms: {},
+        locationTypes: {},
+        locations: {},
+        posts: {},
+        createRoom: {
+            postType: null,
+            game: null,
+            platform: null,
+            locationType: null,
+            location: null,
+            gamePassword: "",
+            description: "",
+        }
     },
     mutations: {
         setDrawer: (state, drawer) => {
@@ -57,6 +67,9 @@ export default new Vuex.Store({
         },
         setGames: (state, games) => {
             state.games = games;
+        },
+        setPosts: (state, posts) => {
+            state.posts = posts;
         }
     },
     actions: {
@@ -69,8 +82,8 @@ export default new Vuex.Store({
             let {data} = await axios
                 .post(context.state.url + '/auth/register',
                     {
-                        username:dataRegister.username,
-                        password:dataRegister.password
+                        username: dataRegister.username,
+                        password: dataRegister.password
                     },
                     {
                         'Content-Type': 'application/json'
@@ -89,14 +102,14 @@ export default new Vuex.Store({
             let {data} = await axios
                 .post(context.state.url + '/auth/login',
                     {
-                        username:dataLogin.username,
-                        password:dataLogin.password
+                        username: dataLogin.username,
+                        password: dataLogin.password
                     },
                     {
                         'Content-Type': 'application/json'
                     })
             console.log(data);
-            context.commit('setAuthorize',true)
+            context.commit('setAuthorize', true)
             context.commit('setToken', data.token)
             context.dispatch('RESET_FORM');
         },
@@ -105,15 +118,40 @@ export default new Vuex.Store({
             context.commit('setUserName', null);
             context.commit('setPassword', null);
         },
-        GET_CATALOG: async  (context) => {
+        GET_CATALOG: async (context) => {
             let {data} = await axios
-                .get(context.state.url + '/catalog/',{headers:{'language-code':'ru'}});
+                .get(context.state.url + '/catalog/', {headers: {'language-code': 'ru'}});
 
-            context.commit('setGames',data.games);
-            context.commit('setLocations',data.locations);
+            context.commit('setGames', data.games);
+            context.commit('setLocations', data.locations);
             context.commit('setPlatforms', data.platforms);
             context.commit('setTypesLocation', data.locationTypes);
 
+        },
+        GET_POSTS: async (context) => {
+            let {data} = await axios
+                .get(context.state.url + '/posts')
+
+            context.commit('setPosts', data);
+        },
+        CREATE_POST: async (context) => {
+            let {data} = await axios
+                .post(context.state.url + '/post/', {
+                    postType: context.state.createRoom.postType,
+                    game: context.state.createRoom.game,
+                    platform: context.state.createRoom.platform,
+                    locationType: context.state.createRoom.locationType,
+                    location: context.state.createRoom.location,
+                    gamePassword: "123asd12",
+                    description: "",
+                    id:"",
+                }, {
+                    'Content-Type': 'application/json',
+                    headers: {
+                        'Authorization': context.state.token
+                    }
+                })
+            console.log(data)
         }
     },
     modules: {}
