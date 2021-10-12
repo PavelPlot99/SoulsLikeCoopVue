@@ -1,24 +1,10 @@
-# vuetify-app
+# SoulsCoopLike
 
-## Project setup
-```
-npm install
-```
+## Веб-приложение для поиска команды в играх: 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+*ul - Dark Souls:Remastered
+*ul - Dark Souls
+*ul - Dark Souls 2
+*ul - Bloodborne
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![alt text](public/soulsLike.png)
