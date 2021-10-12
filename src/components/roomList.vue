@@ -7,65 +7,24 @@
     </v-row>
 
     <v-row class="list__cafes-content">
-      <v-col md="4">
+
+      <v-col md="6" v-for="post in posts" :key="post.id">
         <v-card>
           <v-card-title>
-            <h3 class="text-h4">Название комнаты</h3>
+            <h3 class="text-h4">{{post.postType}}</h3>
           </v-card-title>
           <v-card-text>
-            <p class="text-body-1"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem debitis dignissimos earum enim, facilis fugit id impedit inventore iste laborum molestias mollitia nulla ratione rem sequi sunt tempore voluptatem voluptates.</span></p>
+
+            <span><p>Тип локации: {{locationsTypes.find(loc => loc.id === post.locationType).name}}</p></span>
+            <span><p>Локация: {{locations.find(loc => loc.id === post.location).name}}</p></span>
+            <span><p>Описание: {{post.description}} </p></span>
+            <span><p>Игра: {{games.find(game => game.id === post.game).name}}</p></span>
+            <span><p>Платформа: {{platforms.find(platform => platform.id === post.platform).name}}</p></span>
           </v-card-text>
           <v-card-actions><v-btn>Присоединиться</v-btn></v-card-actions>
         </v-card>
       </v-col>
 
-      <v-col md="4">
-        <v-card>
-          <v-card-title>
-            <h3 class="text-h4">Название комнаты</h3>
-          </v-card-title>
-          <v-card-text>
-            <p class="text-body-1"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem debitis dignissimos earum enim, facilis fugit id impedit inventore iste laborum molestias mollitia nulla ratione rem sequi sunt tempore voluptatem voluptates.</span></p>
-          </v-card-text>
-          <v-card-actions><v-btn>Присоединиться</v-btn></v-card-actions>
-        </v-card>
-      </v-col>
-
-      <v-col md="4">
-        <v-card>
-          <v-card-title>
-            <h3 class="text-h4">Название комнаты</h3>
-          </v-card-title>
-          <v-card-text>
-            <p class="text-body-1"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem debitis dignissimos earum enim, facilis fugit id impedit inventore iste laborum molestias mollitia nulla ratione rem sequi sunt tempore voluptatem voluptates.</span></p>
-          </v-card-text>
-          <v-card-actions><v-btn>Присоединиться</v-btn></v-card-actions>
-        </v-card>
-      </v-col>
-
-      <v-col md="4">
-        <v-card>
-          <v-card-title>
-            <h3 class="text-h4">Название комнаты</h3>
-          </v-card-title>
-          <v-card-text>
-            <p class="text-body-1"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem debitis dignissimos earum enim, facilis fugit id impedit inventore iste laborum molestias mollitia nulla ratione rem sequi sunt tempore voluptatem voluptates.</span></p>
-          </v-card-text>
-          <v-card-actions><v-btn>Присоединиться</v-btn></v-card-actions>
-        </v-card>
-      </v-col>
-
-      <v-col md="4">
-        <v-card>
-          <v-card-title>
-            <h3 class="text-h4">Название комнаты</h3>
-          </v-card-title>
-          <v-card-text>
-            <p class="text-body-1"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem debitis dignissimos earum enim, facilis fugit id impedit inventore iste laborum molestias mollitia nulla ratione rem sequi sunt tempore voluptatem voluptates.</span></p>
-          </v-card-text>
-          <v-card-actions><v-btn>Присоединиться</v-btn></v-card-actions>
-        </v-card>
-      </v-col>
     </v-row>
 
   </v-container>
@@ -73,7 +32,23 @@
 
 <script>
 export default {
-
+computed:{
+  posts(){
+    return this.$store.state.posts;
+  },
+  locationsTypes(){
+    return this.$store.state.locationTypes
+  },
+  locations(){
+    return this.$store.state.locations
+  },
+  platforms(){
+    return this.$store.state.platforms
+  },
+  games(){
+    return this.$store.state.games
+  }
+}
 }
 </script>
 
