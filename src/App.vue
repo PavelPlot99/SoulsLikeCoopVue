@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <div v-if="!authorize">
+    <div v-if="!authorize" >
       <v-row justify="center">
         <v-col md="3">
           <v-img
-              src="../public/soulsLike.jpg"
-              lazy-src="../public/soulsLike.jpg"
+              src="../public/soulsLike.png"
+              lazy-src="../public/soulsLike.png"
               max-height="800"
               max-width="600"
           >
@@ -119,7 +119,8 @@
       </v-row>
 
     </div>
-    <div v-if="authorize">
+
+    <div v-if="authorize" fluid="true">
       <v-navigation-drawer
           app
           left
@@ -149,7 +150,7 @@
       <v-app-bar app color="grey darken-4">
         <v-app-bar-nav-icon @click="drawer = !drawer" color="white"></v-app-bar-nav-icon>
         <v-app-bar-title>
-          <h3 class="text-h4 white--text">Dark Souls party</h3>
+          <h3 class="text-h4 white--text">SoulLikeCoop</h3>
         </v-app-bar-title>
 
       </v-app-bar>
@@ -167,6 +168,7 @@ export default {
   mounted() {
     document.title = 'Dark Souls';
     this.$store.dispatch('GET_CATALOG');
+    this.$store.dispatch('GET_POSTS');
   },
   methods:{
     register(){
@@ -207,6 +209,9 @@ export default {
       set(value) {
         this.$store.commit('setDrawer', value);
       }
+    },
+    links(){
+      return this.$store.state.links
     }
   }
 }
