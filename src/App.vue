@@ -179,14 +179,14 @@ export default {
       await this.$store.dispatch('GET_PROFILE')
     },
     logout(){
-      this.$store.commit('setAuthorize',false);
-      this.$store.commit('setToken', "");
+      this.$store.commit('setAuthorize',false)
+      this.$store.commit('setToken', "")
 
     }
   },
   computed: {
     authorize() {
-      return this.$store.state.authorize;
+      return this.$store.state.authorize
     },
     username: {
       get() {

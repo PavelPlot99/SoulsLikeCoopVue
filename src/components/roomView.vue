@@ -10,8 +10,8 @@
         <h5 class="text-center text-h3 py-3">Игровой чат</h5>
         <v-container class="fill-height">
           <v-row class="fill-height pb-14" align="end">
-            <v-col>
-              <div v-for="(chat, index) in roomChat" :key="index"
+            <v-col v-if="roomChat !== null">
+              <div  v-for="(chat, index) in roomChat" :key="index"
                    :class="['d-flex flex-row align-center my-2', chat.user.username === currentUser.username ? 'justify-end': null]">
                 <span v-if="chat.user.username === currentUser.username" class="blue--text mr-3">{{ chat.message }}</span>
                 <v-avatar :color="chat.user.username === currentUser.username ? 'indigo': 'red'" size="50">
@@ -44,6 +44,7 @@ export default {
   mounted() {
     this.$store.dispatch('GET_ROOM', this.$route.params.id)
     this.getChat()
+    this.$store.dispatch('GET_PROFILE');
   },
   methods:{
     async send(){

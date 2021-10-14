@@ -19,8 +19,8 @@ export default new Vuex.Store({
             }
         ],
         currentUser:null,
-        authorize: false,
-        token: null,
+        authorize: window.localStorage.getItem('Authorize'),
+        token: window.localStorage.getItem('token'),
         username: null,
         password: null,
         drawer: false,
@@ -55,9 +55,11 @@ export default new Vuex.Store({
         },
         setToken: (state, token) => {
             state.token = token;
+            window.localStorage.setItem('token', token)
         },
         setAuthorize: (state, flag) => {
             state.authorize = flag;
+            window.localStorage.setItem('Authorize', flag)
         },
         setPlatforms: (state, platforms) => {
             state.platforms = platforms;
@@ -123,9 +125,9 @@ export default new Vuex.Store({
                     {
                         'Content-Type': 'application/json'
                     })
-            context.commit('setAuthorize', true)
-            context.commit('setToken', data.token)
             context.dispatch('RESET_FORM');
+            context.commit('setAuthorize',true)
+            context.commit('setToken', data.token)
         },
 
         RESET_FORM: async (context) => {
