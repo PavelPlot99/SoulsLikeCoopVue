@@ -1,4 +1,4 @@
-# SoulsCoopLike
+# SoulsLikeCoop
 
 ## Веб-приложение для поиска команды в играх: 
 
