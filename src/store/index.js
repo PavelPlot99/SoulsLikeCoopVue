@@ -18,7 +18,7 @@ export default new Vuex.Store({
                 href: '/createRoom',
             }
         ],
-
+        currentUser:null,
         authorize: false,
         token: null,
         username: null,
@@ -31,14 +31,17 @@ export default new Vuex.Store({
         locations: {},
         posts: {},
         createRoom: {
-            postType: null,
+            postType: "HELP",
             game: null,
             platform: null,
             locationType: null,
             location: null,
             gamePassword: "",
             description: "",
-        }
+        },
+        currentPost:null,
+        roomChat:null,
+        message:null,
     },
     mutations: {
         setDrawer: (state, drawer) => {
@@ -70,6 +73,18 @@ export default new Vuex.Store({
         },
         setPosts: (state, posts) => {
             state.posts = posts;
+        },
+        setRoom: (state,room) => {
+            state.currentPost = room;
+        },
+        setRoomChat: (state, chat) => {
+            state.roomChat = chat;
+        },
+        setCurrentUser: (state, user) => {
+            state.currentUser = user
+        },
+        setMessage: (state, message) => {
+            state.message = message
         }
     },
     actions: {
@@ -108,7 +123,6 @@ export default new Vuex.Store({
                     {
                         'Content-Type': 'application/json'
                     })
-            console.log(data);
             context.commit('setAuthorize', true)
             context.commit('setToken', data.token)
             context.dispatch('RESET_FORM');
@@ -143,7 +157,7 @@ export default new Vuex.Store({
                     locationType: context.state.createRoom.locationType,
                     location: context.state.createRoom.location,
                     gamePassword: "123asd12",
-                    description: "",
+                    description: context.state.createRoom.description,
                     id:"",
                 }, {
                     'Content-Type': 'application/json',
@@ -152,7 +166,57 @@ export default new Vuex.Store({
                     }
                 })
             console.log(data)
+        },
+        GET_ROOM: async (context, id) => {
+            let {data} = await  axios
+                .get(context.state.url + '/post/' + id, {
+                    headers:{
+                        'Authorization': context.state.token
+                    }
+                })
+            context.commit('setRoom', data)
+        },
+        GET_CHAT: async (context, id) => {
+            let {data} = await  axios
+                .get(context.state.url + '/chat/' + id + '/', {
+                    headers:{
+                        'Authorization': context.state.token
+                    }
+                })
+            console.log(data)
+          context.commit('setRoomChat', data)
+        },
+        GET_PROFILE: async (context) => {
+            let {data} = await axios
+                .get(context.state.url + '/profile/', {
+                    headers:{
+                        'Authorization': context.state.token
+                    }
+                })
+            console.log(data);
+            context.commit('setCurrentUser', data)
+        },
+        SEND_MESSAGE: async (context) => {
+
+            var abc = "abcdefghijklmnopqrstuvwxyz";
+            var rs = "";
+            while (rs.length < 6) {
+                rs += abc[Math.floor(Math.random() * abc.length)];
+            }
+            let {data} = await axios
+                .post(context.state.url + '/chat/', {
+                    id:rs,
+                    post: context.state.currentPost.id,
+                    message: context.state.message
+                },{
+                    headers:{
+                        'Authorization': context.state.token
+                    }
+                })
+            console.log(data);
+            context.state.message = null
         }
+
     },
     modules: {}
 })

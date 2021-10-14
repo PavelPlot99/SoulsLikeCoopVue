@@ -18,6 +18,11 @@ const routes = [
     name: 'createRoom',
     component: page('components/createRoom.vue'),
   },
+  {
+    path: "/room/:id",
+    name: 'room',
+    component: page('components/roomView.vue')
+  }
 ]
 const router = new VueRouter({
   mode: 'history',

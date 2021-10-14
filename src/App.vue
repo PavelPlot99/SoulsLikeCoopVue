@@ -43,7 +43,7 @@
                         label="Логин"
                         v-model="username"
                     ></v-text-field>
-                    <v-text-field label="Пароль" v-model="password"></v-text-field>
+                    <v-text-field :type="'password'" label="Пароль" v-model="password"></v-text-field>
                   </div>
                 </v-card-text>
                 <v-card-actions class="justify-end">
@@ -94,7 +94,7 @@
                         label="Логин"
                         v-model="username"
                     ></v-text-field>
-                    <v-text-field label="Пароль" v-model="password"></v-text-field>
+                    <v-text-field :type="'password'" label="Пароль" v-model="password"></v-text-field>
                   </div>
                 </v-card-text>
                 <v-card-actions class="justify-end">
@@ -168,18 +168,20 @@ export default {
   mounted() {
     document.title = 'Dark Souls';
     this.$store.dispatch('GET_CATALOG');
-    this.$store.dispatch('GET_POSTS');
   },
   methods:{
     register(){
       this.$store.dispatch('REGISTER');
     },
-    login(){
-      this.$store.dispatch('LOGIN');
+    async login(){
+      this.$router.push('/')
+      await this.$store.dispatch('LOGIN');
+      await this.$store.dispatch('GET_PROFILE')
     },
     logout(){
       this.$store.commit('setAuthorize',false);
       this.$store.commit('setToken', "");
+
     }
   },
   computed: {
@@ -219,6 +221,6 @@ export default {
 <style>
 .link {
   text-decoration: none;
-  color: white;
+  color: white !important;
 }
 </style>

@@ -21,7 +21,7 @@
             <span><p>Игра: {{games.find(game => game.id === post.game).name}}</p></span>
             <span><p>Платформа: {{platforms.find(platform => platform.id === post.platform).name}}</p></span>
           </v-card-text>
-          <v-card-actions><v-btn>Присоединиться</v-btn></v-card-actions>
+          <v-card-actions><v-btn><router-link class="link" :to="'room/' + post.id">Присоединиться</router-link></v-btn></v-card-actions>
         </v-card>
       </v-col>
 
@@ -48,6 +48,9 @@ computed:{
   games(){
     return this.$store.state.games
   }
+},
+mounted() {
+  this.$store.dispatch('GET_POSTS');
 }
 }
 </script>
