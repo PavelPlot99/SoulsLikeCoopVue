@@ -66,28 +66,30 @@
             <v-select
                 filled
                 rounded
-                :items="filteredLocationTypes"
+                :items="filteredLocations"
                 item-text="name"
                 item-value="id"
-                label="Выберите тип локации"
-                v-model="createRoom.locationType"
+                label="Выберите локацию"
+                v-model="createRoom.location"
             ></v-select>
           </v-col>
         </v-row>
 
         <v-row>
           <v-col md="12">
-            <v-select
+            <v-textarea
+                v-model="createRoom.description"
+                label="Описание"
                 filled
                 rounded
-                :items="filteredLocations"
-                item-text="name"
-                item-value="id"
-                label="Выберите локация"
-                v-model="createRoom.location"
-            ></v-select>
+                counter
+                maxlength="120"
+                full-width
+                single-line
+            ></v-textarea>
           </v-col>
         </v-row>
+      </v-col>
 
         <v-row justify="center">
           <v-col md="1" >
@@ -97,7 +99,6 @@
           </v-col>
         </v-row>
 
-      </v-col>
     </v-row>
 
 
